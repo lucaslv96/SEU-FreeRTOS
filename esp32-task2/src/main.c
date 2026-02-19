@@ -62,11 +62,19 @@ void app_main()
 void vTask1(void * parameter)
 {
   int counter = 0;
+  UBaseType_t uxPriority;
   
   /* loop forever */
   for(;;)
   {
-    printf("[Task1] Loop iteration %d\n", ++counter);
+    uxPriority = uxTaskPriorityGet(NULL);
+    printf("[Task1] Loop iteration %d, Priority: %d\n", ++counter, uxPriority);
+    
+    /* Change priority to match Task3 on first iteration */
+    if (counter == 1)
+    {
+      vTaskPrioritySet(NULL, TASK3_PRIORITY);
+    }
   }
 }
 
@@ -74,11 +82,19 @@ void vTask1(void * parameter)
 void vTask2(void * parameter)
 {
   int counter = 0;
+  UBaseType_t uxPriority;
   
   /* loop forever */
   for(;;)
   {
-    printf("[Task2] Loop iteration %d\n", ++counter);
+    uxPriority = uxTaskPriorityGet(NULL);
+    printf("[Task2] Loop iteration %d, Priority: %d\n", ++counter, uxPriority);
+    
+    /* Change priority to match Task3 on first iteration */
+    if (counter == 1)
+    {
+      vTaskPrioritySet(NULL, TASK3_PRIORITY);
+    }
   }
 }
 
@@ -86,10 +102,12 @@ void vTask2(void * parameter)
 void vTask3(void * parameter)
 {
   int counter = 0;
+  UBaseType_t uxPriority;
   
   /* loop forever */
   for(;;)
   {
-    printf("[Task3] Loop iteration %d\n", ++counter);
+    uxPriority = uxTaskPriorityGet(NULL);
+    printf("[Task3] Loop iteration %d, Priority: %d\n", ++counter, uxPriority);
   }
 }
